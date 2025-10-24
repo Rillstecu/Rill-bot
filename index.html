@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RillBot AI - Retro Glitch</title>
+  <style>
+    body {
+      background: black;
+      color: #00ffcc;
+      font-family: "Courier New", monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .glitch {
+      font-size: 2rem;
+      text-transform: uppercase;
+      animation: glitch 2s infinite;
+      text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+      50% { text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff; }
+      100% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+    }
+    textarea {
+      width: 80%;
+      height: 80px;
+      background: #111;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      padding: 10px;
+      border-radius: 10px;
+      outline: none;
+      resize: none;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #00ffcc;
+      color: black;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #response {
+      margin-top: 20px;
+      width: 80%;
+      min-height: 100px;
+      background: #111;
+      border: 1px solid #00ffcc;
+      padding: 10px;
+      border-radius: 10px;
+      overflow-y: auto;
+      color: #00ffcc;
+    }
+    .tiktok {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="tiktok" onclick="window.open('https://www.tiktok.com/@rillll_14','_blank')">🎵</div>
+  <h1 class="glitch">RillBot AI</h1>
+  <textarea id="input" placeholder="Ketik pertanyaanmu..."></textarea>
+  <button onclick="sendMessage()">Kirim</button>
+  <div id="response"></div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("input").value;
+      const responseDiv = document.getElementById("response");
+      responseDiv.innerHTML = "<i>Loading...</i>";
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input })
+      });
+
+      const data = await res.json();
+      responseDiv.innerHTML = data.reply || "Gagal mendapatkan jawaban 😢";
+    }
+  </script>
+</body>
+  </html>
+    
