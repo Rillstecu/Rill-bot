@@ -1,0 +1,12 @@
+{
+  "name": "rillbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.15.0"
+  }
+}
