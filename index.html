@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>RillBot AI - Retro Glitch</title>
   <style>
+    /* ====== CSS BERSIH ====== */
     body {
       background: black;
       color: #00ffcc;
@@ -98,214 +99,51 @@
       opacity: 0.7;
       letter-spacing: 1px;
     }
+    /* ====== END CSS ====== */
   </style>
 </head>
 <body>
   <div class="tiktok" onclick="window.open('https://www.tiktok.com/@rillll_14','_blank')">🎵</div>
   <h1 class="glitch">RillBot AI</h1>
+
   <textarea id="input" placeholder="Ketik pertanyaanmu..."></textarea>
-  <button onclick="sendMessage()">Kirim</button>
+  <button id="sendBtn">Kirim</button>
   <div id="response"></div>
   <div class="creator">Created by <b>@rillll_14</b></div>
 
   <script>
+    // frontend sederhana — jangan taruh API key di sini
+    const sendBtn = document.getElementById('sendBtn');
+    const input = document.getElementById('input');
+    const responseDiv = document.getElementById('response');
+
     async function sendMessage() {
-      const input = document.getElementById("input").value.trim();
-      const responseDiv = document.getElementById("response");
-      if (!input) {
-        responseDiv.innerHTML = "⚠️ Harap isi pertanyaan terlebih dahulu.";
+      const text = input.value.trim();
+      if (!text) {
+        responseDiv.innerHTML = '⚠️ Isi pertanyaan dulu.';
         return;
       }
-
-      responseDiv.innerHTML = "<i>🌀 Memproses jawaban...</i>";
-
+      responseDiv.innerHTML = '<i>🌀 Memproses jawaban...</i>';
       try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: input })
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
         });
-
         const data = await res.json();
-
         if (res.ok && data.reply) {
-          responseDiv.innerHTML = data.reply.replace(/\n/g, "<br>");
+          responseDiv.innerHTML = data.reply.replace(/\n/g, '<br>');
         } else {
-          responseDiv.innerHTML = "😢 Gagal mendapatkan jawaban. Periksa API atau koneksi.";
+          responseDiv.innerHTML = '😢 Gagal mendapatkan jawaban. Cek log Vercel.';
         }
       } catch (err) {
         console.error(err);
-        responseDiv.innerHTML = "⚠️ Error: Tidak dapat terhubung ke server.";
+        responseDiv.innerHTML = '⚠️ Tidak dapat terhubung ke server.';
       }
     }
+
+    sendBtn.addEventListener('click', sendMessage);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { sendMessage(); } });
   </script>
 </body>
 </html>
-      width: 80%;
-      height: 80px;
-      background: #111;
-      color: #00ffcc;
-      border: 1px solid #00ffcc;
-      padding: 10px;
-      border-radius: 10px;
-      outline: none;
-      resize: none;
-      box-shadow: 0 0 10px #00ffcc50;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      background: #00ffcc;
-      color: black;
-      font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px #00ffcc70;
-    }
-
-    button:hover {
-      background: #00ffaa;
-      transform: scale(1.05);
-    }
-
-    #response {
-      margin-top: 20px;
-      width: 80%;
-      min-height: 100px;
-      background: #111;
-      border: 1px solid #00ffcc;
-      padding: 10px;
-      border-radius: 10px;
-      overflow-y: auto;
-      color: #00ffcc;
-      box-shadow: inset 0 0 10px #00ffcc40;
-    }
-
-    .tiktok {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 28px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .tiktok:hover {
-      transform: scale(1.2) rotate(10deg);
-      color: #ff0066;
-    }
-
-    .creator {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-      letter-spacing: 1px;
-    }
-  </style>
-</head>
-<body>
-  <div class="tiktok" onclick="window.open('https://www.tiktok.com/@rillll_14','_blank')">🎵</div>
-  <h1 class="glitch">RillBot AI</h1>
-  <textarea id="input" placeholder="Ketik pertanyaanmu..."></textarea>
-  <button onclick="sendMessage()">Kirim</button>
-  <div id="response"></div>
-  <div class="creator">Created by <b>@rillll_14</b></div>
-
-  <script>
-    async function sendMessage() {
-      const input = document.getElementById("input").value.trim();
-      const responseDiv = document.getElementById("response");
-      if (!input) {
-        responseDiv.innerHTML = "⚠️ Harap isi pertanyaan terlebih dahulu.";
-        return;
-      }
-
-      responseDiv.innerHTML = "<i>🌀 Memproses jawaban...</i>";
-
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: input })
-        });
-
-        const data = await res.json();
-
-        if (res.ok && data.reply) {
-          responseDiv.innerHTML = data.reply.replace(/\n/g, "<br>");
-        } else {
-          responseDiv.innerHTML = "😢 Gagal mendapatkan jawaban. Periksa API atau koneksi.";
-        }
-      } catch (err) {
-        console.error(err);
-        responseDiv.innerHTML = "⚠️ Error: Tidak dapat terhubung ke server.";
-      }
-    }
-  </script>
-</body>
-</html>
-      padding: 10px;
-      border-radius: 10px;
-      outline: none;
-      resize: none;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      background: #00ffcc;
-      color: black;
-      font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    #response {
-      margin-top: 20px;
-      width: 80%;
-      min-height: 100px;
-      background: #111;
-      border: 1px solid #00ffcc;
-      padding: 10px;
-      border-radius: 10px;
-      overflow-y: auto;
-      color: #00ffcc;
-    }
-    .tiktok {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 28px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div class="tiktok" onclick="window.open('https://www.tiktok.com/@rillll_14','_blank')">🎵</div>
-  <h1 class="glitch">RillBot AI</h1>
-  <textarea id="input" placeholder="Ketik pertanyaanmu..."></textarea>
-  <button onclick="sendMessage()">Kirim</button>
-  <div id="response"></div>
-
-  <script>
-    async function sendMessage() {
-      const input = document.getElementById("input").value;
-      const responseDiv = document.getElementById("response");
-      responseDiv.innerHTML = "<i>Loading...</i>";
-
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input })
-      });
-
-      const data = await res.json();
-      responseDiv.innerHTML = data.reply || "Gagal mendapatkan jawaban 😢";
-    }
-  </script>
-</body>
-  </html>
-    
